@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->index()->nullable();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('customername');
-            $table->integer('quantity');
-            $table->integer('price');
+            $table->string('quantity');
+            $table->string('price');
             $table->integer('totalprice');
             $table->string('paymentmode');
             $table->string('paymentstatus');

@@ -81,7 +81,6 @@ class SalesController extends Controller
                         $product->stockquantity -= $soldQuantity;
                         $product->save();
     
-                        // Continue saving the sale for this product
                         $sale = new Sale();
                         $sale->product_id = $product_id;
                         $sale->customername = $request->input('customername');
@@ -92,11 +91,11 @@ class SalesController extends Controller
                         $sale->date = $request->input('date');
                         $sale->status = 1;
                         $sale->createdby = $username;
+                        $sale->totalprice = $soldQuantity * $prices[$key]; // Calculate total price
                         $sale->updatedby = "";
                         $sale->deletedby = "";
-                        $sale->totalprice = $soldQuantity * $prices[$key]; // Calculate total price
-    
                         $sale->save();
+                        
 
                         $invoice = new Invoice();
                         $invoice->sale_id = $sale->id;
