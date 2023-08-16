@@ -222,7 +222,30 @@
                                     <span>Tables</span>
                                 </a>
                             </li>
-                            
+                            <li>
+                                <a href="{{ route('products.index') }}" class="waves-effect">
+                                    <i class="ri-dashboard-line"></i>
+                                    <span>Products</span>
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="{{ route('sales.index') }}" class="waves-effect">
+                                    <i class="ri-dashboard-line"></i>
+                                    <span>Sales</span>
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="{{ route('invoices.index') }}" class="waves-effect">
+                                    <i class="ri-dashboard-line"></i>
+                                    <span>Invoices</span>
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="{{ route('categories.index') }}" class="waves-effect">
+                                    <i class="ri-dashboard-line"></i>
+                                    <span>Categories</span>
+                                </a>
+                            </li> 
                         </ul>
                     </div>
                     <!-- Sidebar -->
@@ -331,49 +354,23 @@
         </script>
 
         <script>
-            document.getElementById('exportBudgetsButton').addEventListener('click', function() {
-                // Get the table content for Budgets
-                const table = document.querySelectorAll('.table-responsive')[0].querySelector('table');
-                const tableContent = table.outerHTML;
-
-                // Create a Blob containing the table content
-                const blob = new Blob([tableContent], { type: 'text/html' });
-
-                // Create a URL for the Blob
-                const url = URL.createObjectURL(blob);
-
-                // Create a temporary anchor element to trigger the download
-                const downloadLink = document.createElement('a');
-                downloadLink.href = url;
-                downloadLink.download = 'budgets_report.html'; // Change the filename if you want a different extension
-                downloadLink.click();
-
-                // Clean up by revoking the URL
-                URL.revokeObjectURL(url);
+            $(document).ready(function () {
+            // Function to add a new form when the "Add" button is clicked
+            $('#form-wrapper').on('click', '.add-repeater', function () {
+                var clonedForm = $('#form-wrapper .row:last').clone(); // Clone the last form
+                clonedForm.find('input').val(''); // Clear input values in the cloned form
+                clonedForm.find('.add-repeater').addClass('d-none'); // Hide the "Add" button in the cloned form
+                $('#form-wrapper').append(clonedForm); // Append the cloned form to the wrapper
             });
-
-            document.getElementById('exportExpensesButton').addEventListener('click', function() {
-                // Get the table content for Expenses
-                const table = document.querySelectorAll('.table-responsive')[1].querySelector('table');
-                const tableContent = table.outerHTML;
-
-                // Create a Blob containing the table content
-                const blob = new Blob([tableContent], { type: 'text/html' });
-
-                // Create a URL for the Blob
-                const url = URL.createObjectURL(blob);
-
-                // Create a temporary anchor element to trigger the download
-                const downloadLink = document.createElement('a');
-                downloadLink.href = url;
-                downloadLink.download = 'expenses_report.html'; // Change the filename if you want a different extension
-                downloadLink.click();
-
-                // Clean up by revoking the URL
-                URL.revokeObjectURL(url);
+            
+            // Function to remove the form when the "Remove" button is clicked
+            $('#form-wrapper').on('click', '.remove-repeater', function () {
+                if ($('#form-wrapper .row').length > 1) { // Ensure there is at least one form left
+                $(this).closest('.row').remove(); // Remove the clicked form
+                }
+            });
             });
         </script>
-
     </body>
 
 <!-- Mirrored from themesdesign.in/upcube/layouts/pages-starter.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Feb 2023 16:22:01 GMT -->
