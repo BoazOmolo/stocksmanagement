@@ -53,73 +53,59 @@ class SalesController extends Controller
     public function store(Request $request)
     {
         $username = Auth::user()->name;
-
-        $sale = new Sale();
-        $sale->customername = $request->input('customername');
-        $sale->quantity = $request->input('quantity');
-        $sale->price = $request->input('price');
-        $sale->paymentmode = $request->input('paymentmode');
-        $sale->paymentstatus = $request->input('paymentstatus');
-        $sale->date = $request->input('date');
-        $sale->status = 1;
-        $sale->createdby = $username;
-        $sale->updatedby = "";
-        $sale->deletedby = "";
-
-        if ($request->has('product_id')) {
-            $product_ids = $request->input('product_id');
-            $quantities = $request->input('quantity');
-            $prices = $request->input('price');
     
-            foreach ($product_ids as $key => $product_id) {
-                $product = Product::findOrFail($product_id);
+        $product_ids = $request->input('product_id');
+        $quantities = $request->input('quantity');
+        $prices = $request->input('price');
     
-                if ($product) {
-                    $soldQuantity = $quantities[$key];
+        foreach ($product_ids as $key => $product_id) {
+            $product = Product::findOrFail($product_id);
     
-                    if ($product->stockquantity >= $soldQuantity) {
-                        $product->stockquantity -= $soldQuantity;
-                        $product->save();
+            if ($product) {
+                $soldQuantity = $quantities[$key];
     
-                        $sale = new Sale();
-                        $sale->product_id = $product_id;
-                        $sale->customername = $request->input('customername');
-                        $sale->quantity = $soldQuantity;
-                        $sale->price = $prices[$key];
-                        $sale->paymentmode = $request->input('paymentmode');
-                        $sale->paymentstatus = $request->input('paymentstatus');
-                        $sale->date = $request->input('date');
-                        $sale->status = 1;
-                        $sale->createdby = $username;
-                        $sale->totalprice = $soldQuantity * $prices[$key]; // Calculate total price
-                        $sale->updatedby = "";
-                        $sale->deletedby = "";
-                        $sale->save();
-                        
-
-                        $invoice = new Invoice();
-                        $invoice->sale_id = $sale->id;
-                        $invoice->invoicenumber = 'INV-' . date('Ymd') . '-' . $sale->id;
-                        $invoice->totalprice = $sale->totalprice;
-                        $invoice->date = $sale->date;
-                        $invoice->status = 1;
-                        $invoice->createdby = $username;
-                        $invoice->updatedby = "";
-                        $invoice->deletedby = "";
-                        $invoice->save();
-
-                        Session::flash('successcode', 'success');
-                        return redirect()->route('sales.index')->with('success', 'Sale added successfully.');
-                    } else {
-                        // Handle if insufficient stock
-                        return redirect()->back()->with('error', 'Insufficient stock for the selected product.');
-                    }
-                }
+                if ($product->stockquantity >= $soldQuantity) {
+                    $product->stockquantity -= $soldQuantity;
+                    $product->save();
+    
+                    // Continue saving the sale for this product
+                    $sale = new Sale();
+                    $sale->product_id = $product_id;
+                    $sale->customername = $request->input('customername');
+                    $sale->quantity = $soldQuantity;
+                    $sale->price = $prices[$key];
+                    $sale->paymentmode = $request->input('paymentmode');
+                    $sale->paymentstatus = $request->input('paymentstatus');
+                    $sale->date = $request->input('date');
+                    $sale->status = 1;
+                    $sale->createdby = $username;
+                    $sale->updatedby = "";
+                    $sale->deletedby = "";
+                    $sale->totalprice = $soldQuantity * $prices[$key]; // Calculate total price
+    
+                   
+                    $sale->save();
+                }          
             }
         }
-        // Handle if product is not found or other errors
-        return redirect()->back()->with('error', 'Error occurred while processing the sale.');
+
+        // Generate invoice for the sale
+        $invoice = new Invoice();
+        $invoice->sale_id = $sale->id;
+        $invoice->invoicenumber = 'INV-' . date('Ymd') . '-' . $sale->id;
+        $invoice->totalprice = $sale->totalprice;
+        $invoice->date = $sale->date;
+        $invoice->status = 1;
+        $invoice->createdby = $username;
+        $invoice->updatedby = "";
+        $invoice->deletedby = "";
+        $invoice->save();
+        Session::flash('successcode', 'success');
+        return redirect()->route('sales.index')->with('success', 'Sale added successfully.');   
+       
     }
+      
+
 
 
     /**
