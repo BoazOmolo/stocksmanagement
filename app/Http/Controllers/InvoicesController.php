@@ -49,7 +49,12 @@ class InvoicesController extends Controller
      */
     public function show($id)
     {
-        //
+        $invoice = Invoice::findOrFail($id);
+        // Assuming that you have a 'Sale' model
+        $sale = $invoice->sale ?? null;
+       
+
+        return view('invoices.show', compact('invoice', 'sale'));
     }
 
     /**

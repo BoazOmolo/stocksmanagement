@@ -45,7 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/sales', [SalesController::class, 'store'])->name('sales.store');
     Route::get('/sales/{sale}', [SalesController::class, 'show'])->name('sales.show');
     Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
-    Route::get('invoices/{invoice}', [SalesController::class, 'showinvoice'])->name('sales.showinvoice');
+    Route::get('/invoices/{invoice}', [InvoicesController::class, 'show'])->name('invoices.show');
+    
 });
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){

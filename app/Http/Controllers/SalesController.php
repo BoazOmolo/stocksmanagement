@@ -94,6 +94,7 @@ class SalesController extends Controller
         $invoice->sale_id = $sale->id;
         $invoice->invoicenumber = 'INV-' . date('Ymd') . '-' . $sale->id;
         $invoice->totalprice = $sale->totalprice;
+        
         $invoice->date = $sale->date;
         $invoice->status = 1;
         $invoice->createdby = $username;
@@ -154,12 +155,5 @@ class SalesController extends Controller
         //
     }
 
-    public function showinvoice($invoiceId)
-    {
-        $invoice = Invoice::findOrFail($invoiceId);
-        // Assuming that you have a 'Sale' model
-        $sale = $invoice->sale ?? null;
-
-        return view('sales.showinvoice', compact('invoice', 'sale'));
-    }
+    
 }

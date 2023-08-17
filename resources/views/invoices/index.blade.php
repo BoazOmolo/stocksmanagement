@@ -55,7 +55,7 @@
                                             <td>{{ $invoice->date }}</td>
                                             <td>{{ $invoice->totalprice }}</td>
                                             <td>
-                                                <a class="btn btn-primary upcube-btn" href="{{ route('sales.showinvoice', ['invoice' => $invoice->id]) }}">View</a>
+                                                <a class="btn btn-primary upcube-btn" href="{{ route('invoices.show', $invoice->id ) }}">View</a>
                                                 <a class="btn btn-secondary upcube-btn" href="">Edit</a>
                                                 <form action="" method="POST" class="d-inline">
                                                     @csrf
