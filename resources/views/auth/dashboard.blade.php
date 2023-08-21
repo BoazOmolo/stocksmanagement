@@ -47,8 +47,11 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="flex-grow-1">
-                                    <p class="text-truncate font-size-14 mb-2">Products In Stock</p>
+                                    <p class="text-truncate font-size-14 mb-2">Products Nearly Out of Stock</p>
                                     <h4 class="mb-2">{{ isset($totalstock) ? $totalstock : '' }}</h4>
+                                    <div>
+                                        <a class="btn btn-secondary" href="{{ route('products.almostoutstock') }}">View</a>
+                                    </div>
                                 </div>
                                 <div class="avatar-sm">
                                     <span class="avatar-title bg-light text-success rounded-3">
@@ -66,23 +69,74 @@
                                 <div class="flex-grow-1">
                                     <p class="text-truncate font-size-14 mb-2">Products Out of Stock</p>
                                     <h4 class="mb-2">{{ isset($totaloutofstock) ? $totaloutofstock : '' }}</h4>
+                                    <div>
+                                        <a class="btn btn-secondary" href="{{ route('products.outstock') }}">View</a>
+                                    </div>
                                 </div>
                                 <div class="avatar-sm">
                                     <span class="avatar-title bg-light text-primary rounded-3">
                                         <i class="ri-user-3-line font-size-24"></i>  
                                     </span>
                                 </div>
+                               
                             </div>                                              
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
                 
             </div><!-- end row -->
+            <div class="row">
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Latest Transactions</h4>
 
+                            <div class="table-responsive">
+                                <table class="table table-centered mb-0 align-middle table-hover table-nowrap">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Customer Name</th>
+                                            <th>Payment Status</th>
+                                            <th>Payment Mode</th>
+                                            <th>Quantity</th>
+                                            <th>Total Price</th>
+                                            
+                                        </tr>
+                                    </thead><!-- end thead -->
+                                    <tbody>
+                                        @foreach($sales as $index => $sale)
+                                            <tr>
+                                                <td>{{ $index +=1}}</td>
+                                                <td>{{ $sale->customername }}</td>
+                                                <td>
+                                                    <div style="
+                                                        background-color: {{ $taskStatusColors[$sale->paymentstatus] }};
+                                                        padding: 5px;
+                                                        display: inline-block;
+                                                        border-radius: 10px;
+                                                    ">
+                                                        {{ $sale->paymentstatus }}
+                                                    </div>
+                                                </td>
+                                                <td>{{ $sale->paymentmode }}</td>
+                                                <td>{{ $sale->quantity }}</td>
+                                                <td>{{ $sale->totalprice }}</td>
+                                            </tr>   
+                                        @endforeach
+                                    </tbody><!-- end tbody -->
+                                </table> <!-- end table -->
+                            </div>
+                        </div><!-- end card -->
+                    </div><!-- end card -->
+                </div>
+                <!-- end col -->
+                
+            </div>
             <div class="row">
                 
                 <!-- end col -->
-                <div class="col-xl-6">
+                <div class="col-10">
                     <div class="card">
                         <div class="card-body pb-0">
                             <div class="float-end d-none d-md-inline-block">
@@ -104,28 +158,29 @@
                                 <div class="row">
                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                         <div>
-                                            <h5>17,493</h5>
-                                            <p class="text-muted text-truncate mb-0">Marketplace</p>
+                                            <h5>Today</h5>
+                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ $todayTotalPrice }}</p>
+                                            <p class="text-muted text-truncate mb-0">Count: {{ $todayCount }}</p>
                                         </div>
                                     </div><!-- end col -->
                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                         <div>
-                                            <h5>$44,960</h5>
-                                            <p class="text-muted text-truncate mb-0">Last Week</p>
+                                            <h5>Last Week</h5>
+                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ $lastWeekTotalPrice }}</p>
+                                            <p class="text-muted text-truncate mb-0">Count: {{ $lastWeekCount }}</p>
                                         </div>
                                     </div><!-- end col -->
                                     <div class="col-sm-4">
                                         <div>
-                                            <h5>$29,142</h5>
-                                            <p class="text-muted text-truncate mb-0">Last Month</p>
+                                            <h5>Last Month</h5>
+                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ $lastMonthTotalPrice }}</p>
+                                            <p class="text-muted text-truncate mb-0">Count: {{ $lastMonthCount }}</p>
                                         </div>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div>
                         </div>
-                        <div class="card-body py-0 px-2">
-                            <div id="column_line_chart" class="apex-charts" dir="ltr"></div>
-                        </div>
+                       
                     </div><!-- end card -->
                 </div>
                 <!-- end col -->

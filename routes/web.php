@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product}/edit', [ProductsController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [ProductsController::class, 'update'])->name('products.update');
     Route::delete('/products/{id}', [ProductsController::class, 'destroy']) ->name('products.destroy');
+    Route::get('/almostoutstock', [ProductsController::class, 'almostoutstock'])->name('products.almostoutstock');
+    Route::get('/outstock', [ProductsController::class, 'outstock'])->name('products.outstock');
     Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('/sales/create', [SalesController::class, 'create'])->name('sales.create');
     Route::post('/sales', [SalesController::class, 'store'])->name('sales.store');

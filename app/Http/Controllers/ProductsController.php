@@ -145,4 +145,16 @@ class ProductsController extends Controller
         Session::flash('successcode','warning');
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
+
+    public function almostoutstock ()
+    {
+        $products = Product::where('stockquantity', '>', 0)->where('stockquantity', '<', 30)->get();
+        return view('products.almostoutstock', compact('products'));
+    }
+
+    public function outstock ()
+    {
+        $products = Product::where('stockquantity', '<=', 0)->get();
+        return view('products.outstock', compact('products'));
+    }
 }
