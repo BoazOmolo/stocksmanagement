@@ -83,7 +83,28 @@
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
                 </div><!-- end col -->
-                
+                <div class="col-xl-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <p class="text-truncate font-size-14 mb-2">Invoices</p>
+                                    <h4 class="mb-2">{{ isset($invoices) ? $invoices : '' }}</h4>
+                                    <div>
+                                        <a class="btn btn-secondary" href="{{ route('products.outstock') }}">View</a>
+                                    </div>
+                                </div>
+                                <div class="avatar-sm">
+                                    <span class="avatar-title bg-light text-primary rounded-3">
+                                        <i class="ri-user-3-line font-size-24"></i>  
+                                    </span>
+                                </div>
+                               
+                            </div>                                              
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
+
             </div><!-- end row -->
             <div class="row">
                 <div class="col-10">
