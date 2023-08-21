@@ -31,7 +31,7 @@ class DashboardController extends Controller
         $lastMonthTotalPrice = $lastMonthSales->sum('totalprice');
         $lastMonthCount = $lastMonthSales->count();
 
-        $sales = Sale::where('status', 1)->latest()->get();
+        $sales = Sale::where('status', 1)->latest()->take(10)->get();
         $totalsales = Sale::count();
         $totalstock = Product::where('stockquantity', '>', 0)->where('stockquantity', '<', 30)->count();
         $totaloutofstock = Product::where('stockquantity', '<=', 0)->count();
