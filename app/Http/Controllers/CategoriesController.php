@@ -64,7 +64,7 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::with('products')->findOrFail($id);
         return view('categories.show', compact('category'));
     }
 

@@ -22,7 +22,7 @@
             </div>
 
             
-            <h1>Product Details</h1>
+            <h1> Details</h1>
 
             <div class="card">
                 <div class="card-body">
@@ -30,6 +30,33 @@
                     <p class="card-text">Description: {{ $category->description }}</p>
                 </div>
             </div>
+
+            <h2>Products in this Category</h2>
+            <div class="card">
+                <div class="card-body">
+                    <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Stock Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($category->products as $index => $product)
+                                <tr>
+                                    <td>{{ $index +=1}}</td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->description }}</td>
+                                    <td>{{ $product->stockquantity }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                          
+
             <div>
                 <a class="btn btn-secondary" href="{{ url()->previous() }}">Back</a>
             </div>
