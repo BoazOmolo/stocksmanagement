@@ -73,7 +73,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -84,7 +85,11 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        // $tasks = Task::pluck('name', 'id');
+        $categories = Category::all();
+        
+        return view('products.edit', compact('product','categories'));
     }
 
     /**
@@ -96,7 +101,29 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $username = Auth::user()->name;
+
+        $product = Product::findOrFail($id);
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->buyingprice = $request->input('buyingprice');
+        $product->sellingprice = $request->input('sellingprice');
+        $product->stockquantity = $request->input('stockquantity');
+        $product->status = 1;
+        $product->createdby = $username;
+        $product->updatedby = "";
+        $product->deletedby = "";
+
+        if ($request->has('category_id')) {
+            $product->category_id = $request->input('category_id');
+        }
+
+        $product->save();
+
+        unset($product->updated_at);
+
+        Session::flash('successcode','success');
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -107,6 +134,15 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $username = Auth::user()->name;
+
+        $product = Product::findOrFail($id);
+        $product->deletedby = $username;
+        $product->save();
+
+        $product->delete();
+
+        Session::flash('successcode','warning');
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 }

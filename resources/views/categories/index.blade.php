@@ -43,9 +43,9 @@
                                             <td>{{ $category->description }}</td>
                                             
                                             <td>
-                                                <a class="btn btn-primary upcube-btn" href="">View</a>
-                                                <a class="btn btn-secondary upcube-btn" href="">Edit</a>
-                                                <form action="" method="POST" class="d-inline">
+                                                <a class="btn btn-primary upcube-btn" href="{{ route('categories.show', $category->id ) }}">View</a>
+                                                <a class="btn btn-secondary upcube-btn" href="{{ route('categories.edit', $category->id ) }}">Edit</a>
+                                                <form action="{{ route('categories.destroy', $category->id ) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger upcube-btn">Delete</button>

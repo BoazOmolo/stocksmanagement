@@ -37,13 +37,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories', [CategoriesController::class, 'index'])->name('categories.index');
     Route::get('/categories/create', [CategoriesController::class, 'create'])->name('categories.create');
     Route::post('/categories', [CategoriesController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{category}', [CategoriesController::class, 'show'])->name('categories.show');
+    Route::get('/categories/{category}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [CategoriesController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoriesController::class, 'destroy']) ->name('categories.destroy');
     Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}', [ProductsController::class, 'show'])->name('products.show');
+    Route::get('/products/{product}/edit', [ProductsController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{product}', [ProductsController::class, 'update'])->name('products.update');
+    Route::delete('/products/{id}', [ProductsController::class, 'destroy']) ->name('products.destroy');
     Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
     Route::get('/sales/create', [SalesController::class, 'create'])->name('sales.create');
     Route::post('/sales', [SalesController::class, 'store'])->name('sales.store');
     Route::get('/sales/{sale}', [SalesController::class, 'show'])->name('sales.show');
+    Route::delete('/sales/{id}', [SalesController::class, 'destroy']) ->name('sales.destroy');
     Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/{invoice}', [InvoicesController::class, 'show'])->name('invoices.show');
     

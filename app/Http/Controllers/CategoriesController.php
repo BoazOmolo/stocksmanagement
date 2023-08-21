@@ -64,7 +64,8 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('categories.show', compact('category'));
     }
 
     /**
@@ -75,7 +76,9 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -87,7 +90,23 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $username = Auth::user()->name;
+
+        $category = Category::findOrFail($id);
+        $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->status = 1;
+        $category->createdby = "";
+        $category->updatedby = $username;
+        $category->deletedby = "";
+
+        $category->save();
+
+        unset($category->updated_at);
+
+        
+        Session::flash('successcode','success');
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -98,6 +117,15 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $username = Auth::user()->name;
+
+        $category = Category::findOrFail($id);
+        $category->deletedby = $username;
+        $category->save();
+
+        $category->delete();
+
+        Session::flash('successcode','warning');
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

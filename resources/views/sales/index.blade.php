@@ -46,7 +46,8 @@
                                     @foreach($sales as $index => $sale)
                                         <tr>
                                             <td>{{ $index +=1}}</td>
-                                            <td>{{ $sale->product_id ? $sale->product->name : 'N/A' }}</td>
+                                            {{-- <td>{{ $sale->product_id ? $sale->product->name : 'N/A' }}</td> --}}
+                                            <td>{{ $sale->product_id ? ($sale->product ? $sale->product->name : 'N/A') : 'N/A' }}</td>
                                             <td>{{ $sale->customername }}</td>
                                             <td>{{ $sale->quantity }}</td>
                                             <td>{{ $sale->price }}</td>
@@ -66,8 +67,7 @@
                                             <td>{{ $sale->date }}</td>
                                             <td>
                                                 <a class="btn btn-primary upcube-btn" href="{{ route('sales.show', $sale->id ) }}">View</a>
-                                                <a class="btn btn-secondary upcube-btn" href="">Edit</a>
-                                                <form action="" method="POST" class="d-inline">
+                                                <form action="{{ route('sales.destroy', $sale->id ) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger upcube-btn">Delete</button>

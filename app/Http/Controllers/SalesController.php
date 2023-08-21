@@ -152,7 +152,16 @@ class SalesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $username = Auth::user()->name;
+
+        $sale = Sale::findOrFail($id);
+        $sale->deletedby = $username;
+        $sale->save();
+
+        $sale->delete();
+
+        Session::flash('successcode','warning');
+        return redirect()->route('sales.index')->with('success', 'Sale deleted successfully.');
     }
 
     
