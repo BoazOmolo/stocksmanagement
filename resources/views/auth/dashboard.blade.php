@@ -91,7 +91,7 @@
                                     <p class="text-truncate font-size-14 mb-2">Invoices</p>
                                     <h4 class="mb-2">{{ isset($invoices) ? $invoices : '' }}</h4>
                                     <div>
-                                        <a class="btn btn-secondary" href="{{ route('products.outstock') }}">View</a>
+                                        <a class="btn btn-secondary" href="{{ route('invoices.index') }}">View</a>
                                     </div>
                                 </div>
                                 <div class="avatar-sm">
@@ -120,7 +120,7 @@
                                             <th>Customer Name</th>
                                             <th>Payment Status</th>
                                             <th>Payment Mode</th>
-                                            <th>Quantity</th>
+                                            {{-- <th>Quantity</th> --}}
                                             <th>Total Price</th>
                                             
                                         </tr>
@@ -141,8 +141,8 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $sale->paymentmode }}</td>
-                                                <td>{{ $sale->quantity }}</td>
-                                                <td>{{ $sale->totalprice }}</td>
+                                                {{-- <td>{{ $sale->quantity }}</td> --}}
+                                                <td>{{ $sale->invoice->totalprice ?? 'N/A' }}</td>
                                             </tr>   
                                         @endforeach
                                     </tbody><!-- end tbody -->

@@ -23,13 +23,16 @@ class DashboardController extends Controller
         $todaySales = Sale::whereBetween('created_at', [$todayStart, $todayEnd])->get();
         $lastWeekSales = Sale::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])->get();
         $lastMonthSales = Sale::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])->get();
+        $todaySalesmade = Invoice::whereBetween('created_at', [$todayStart, $todayEnd])->get();
+        $lastWeekSalesmade = Invoice::whereBetween('created_at', [$lastWeekStart, $lastWeekEnd])->get();
+        $lastMonthSalesmade = Invoice::whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])->get();
 
         // Calculate total price and count for the last week and last month
         $todayCount = $todaySales->count();
-        $todayTotalPrice = $todaySales->sum('totalprice');
-        $lastWeekTotalPrice = $lastWeekSales->sum('totalprice');
+        $todayTotalPrice = $todaySalesmade->sum('totalprice');
+        $lastWeekTotalPrice = $lastWeekSalesmade->sum('totalprice');
         $lastWeekCount = $lastWeekSales->count();
-        $lastMonthTotalPrice = $lastMonthSales->sum('totalprice');
+        $lastMonthTotalPrice = $lastMonthSalesmade->sum('totalprice');
         $lastMonthCount = $lastMonthSales->count();
 
         $invoices = Invoice::count();
