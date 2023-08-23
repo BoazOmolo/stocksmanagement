@@ -23,19 +23,43 @@
 
             
             <h1>Sale Details</h1>
+           
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">Customer Name: {{ $sale->customername }}</p>
+                        <p class="card-text">Grand Total: {{ $sale->invoice->totalprice }}</p>
+                        <p class="card-text">Payment Mode: {{ $sale->paymentmode }}</p>
+                        <p class="card-text">Payment Status: {{ $sale->paymentstatus }}</p>
+                        <p class="card-text">Date: {{ $sale->date }}</p>
 
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">Product Name: {{ $sale->product_id ? $sale->product->name ?? 'N/A' : '' }}</p>
-                    <p class="card-text">Customer Name: {{ $sale->customername }}</p>
-                    <p class="card-text">Quantity: {{ $sale->quantity }}</p>
-                    <p class="card-text">Price: {{ $sale->price }}</p>
-                    <p class="card-text">Total Price: {{ $sale->totalprice }}</p>
-                    <p class="card-text">Payment Mode: {{ $sale->paymentmode }}</p>
-                    <p class="card-text">Payment Status: {{ $sale->paymentstatus }}</p>
-                    <p class="card-text">Date: {{ $sale->date }}</p>
+                        <!-- Display other sales with the same sale_id -->
+                        <h3>Sales Made</h3>
+                        <table id="datatable" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($sale->products as $product)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>  
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->pivot->quantity }}</td>
+                                        <td>{{ $product->pivot->price }}</td>
+                                        <td>{{ $product->pivot->quantity * $product->pivot->price }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        
+                    </div>
                 </div>
-            </div>
+           
             <div>
                 <a class="btn btn-secondary" href="{{ url()->previous() }}">Back</a>
             </div>

@@ -31,10 +31,10 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Product Name</th>
+                                        {{-- <th>Product Name</th> --}}
                                         <th>Customer Name</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
+                                        {{-- <th>Quantity</th>
+                                        <th>Price</th> --}}
                                         <th>Total Price</th>
                                         <th>Payment Mode</th>
                                         <th>Payment Status</th>
@@ -47,11 +47,11 @@
                                         <tr>
                                             <td>{{ $index +=1}}</td>
                                             {{-- <td>{{ $sale->product_id ? $sale->product->name : 'N/A' }}</td> --}}
-                                            <td>{{ $sale->product_id ? ($sale->product ? $sale->product->name : 'N/A') : 'N/A' }}</td>
+                                            {{-- <td>{{ $sale->product_id ? ($sale->product ? $sale->product->name : 'N/A') : 'N/A' }}</td> --}}
                                             <td>{{ $sale->customername }}</td>
-                                            <td>{{ $sale->quantity }}</td>
-                                            <td>{{ $sale->price }}</td>
-                                            <td>{{ $sale->totalprice }}</td>
+                                            {{-- <td>{{ $sale->quantity }}</td>
+                                            <td>{{ $sale->price }}</td> --}}
+                                            <td>{{ $sale->invoice->totalprice ?? 'N/A' }}</td>
                                             <td>{{ $sale->paymentmode }}</td>
                                             {{-- <td>{{ $sale->paymentstatus }}</td> --}}
                                             <td>

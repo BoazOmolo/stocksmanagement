@@ -36,4 +36,14 @@ class Sale extends Model
             ->withPivot('quantity', 'price')
             ->withTimestamps(); // Optional, if you want to record timestamps in the pivot table
     }    
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
+    }
+
+    public function retrieveproducts()
+    {
+        return $this->belongsToMany(Product::class, 'product_sale', 'sale_id', 'product_id');
+    }
 }

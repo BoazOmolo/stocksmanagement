@@ -126,6 +126,7 @@ class SalesController extends Controller
     public function show($id)
     {
         $sale = Sale::findOrFail($id);
+       
         return view('sales.show', compact('sale'));
     }
 
