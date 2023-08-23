@@ -11,7 +11,7 @@
             <p>Date: {{ $invoice->date }}</p>
             <p>Payment Status: {{ $invoice->sale->paymentstatus }}</p>
             <p>Payment Mode: {{ $invoice->sale->paymentmode }}</p>
-            <p>Grand Total:</p>
+            <p>Grand Total: {{ $invoice->totalprice }}</p>
             <!-- Add more invoice details here as needed -->
 
             <!-- Display product details -->
@@ -27,18 +27,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach() --}}
-                        <tr>
-                            <td></td>  
-                            <td>{{ $invoice->sale->product->name }}</td>
-                            <td>{{ $invoice->sale->quantity }}</td>
-                            <td>{{ $invoice->sale->price }}</td>
-                            <td>{{ $invoice->totalprice }}</td>
-                        </tr> 
-                    {{-- @endforeach --}}
+                    @if ($invoice->sale && $invoice->sale->products)
+                        @foreach($invoice->sale->products as $product)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>  
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->pivot->quantity }}</td>
+                                <td>{{ $product->pivot->price }}</td>
+                                <td>{{ $product->pivot->quantity * $product->pivot->price }}</td>
+                            </tr> 
+                        @endforeach
+                    @endif
                 </tbody>
             </table>
-
 
             <!-- Add a print button -->
             <button onclick="window.print()" class="btn btn-primary">Print</button>

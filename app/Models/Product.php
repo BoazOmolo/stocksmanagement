@@ -22,4 +22,11 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function sales()
+    {
+        return $this->belongsToMany(Sale::class)
+            ->withPivot('quantity', 'price')
+            ->withTimestamps(); // Optional, if you want to record timestamps in the pivot table
+    }
 }

@@ -29,4 +29,11 @@ class Sale extends Model
     {
         return $this->quantity * $this->price;
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)
+            ->withPivot('quantity', 'price')
+            ->withTimestamps(); // Optional, if you want to record timestamps in the pivot table
+    }    
 }

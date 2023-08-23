@@ -50,61 +50,69 @@ class SalesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $username = Auth::user()->name;
-    
-        $product_ids = $request->input('product_id');
-        $quantities = $request->input('quantity');
-        $prices = $request->input('price');
-    
-        foreach ($product_ids as $key => $product_id) {
-            $product = Product::findOrFail($product_id);
-    
-            if ($product) {
-                $soldQuantity = $quantities[$key];
-    
-                if ($product->stockquantity >= $soldQuantity) {
-                    $product->stockquantity -= $soldQuantity;
-                    $product->save();
-    
-                    // Continue saving the sale for this product
-                    $sale = new Sale();
-                    $sale->product_id = $product_id;
-                    $sale->customername = $request->input('customername');
-                    $sale->quantity = $soldQuantity;
-                    $sale->price = $prices[$key];
-                    $sale->paymentmode = $request->input('paymentmode');
-                    $sale->paymentstatus = $request->input('paymentstatus');
-                    $sale->date = $request->input('date');
-                    $sale->status = 1;
-                    $sale->createdby = $username;
-                    $sale->updatedby = "";
-                    $sale->deletedby = "";
-                    $sale->totalprice = $soldQuantity * $prices[$key]; // Calculate total price
-    
-                   
-                    $sale->save();
-                }          
-            }
-        }
 
-        // Generate invoice for the sale
-        $invoice = new Invoice();
-        $invoice->sale_id = $sale->id;
-        $invoice->invoicenumber = 'INV-' . date('Ymd') . '-' . $sale->id;
-        $invoice->totalprice = $sale->totalprice;
-        
-        $invoice->date = $sale->date;
-        $invoice->status = 1;
-        $invoice->createdby = $username;
-        $invoice->updatedby = "";
-        $invoice->deletedby = "";
-        $invoice->save();
-        Session::flash('successcode', 'success');
-        return redirect()->route('sales.index')->with('success', 'Sale added successfully.');   
-       
-    }
+     public function store(Request $request)
+     {
+         $username = Auth::user()->name;
+     
+         $sale = new Sale();
+         $sale->customername = $request->input('customername');
+         $sale->paymentmode = $request->input('paymentmode');
+         $sale->paymentstatus = $request->input('paymentstatus');
+         $sale->date = $request->input('date');
+         $sale->status = 1;
+         $sale->createdby = $username;
+         $sale->updatedby = "";
+         $sale->deletedby = "";
+         $sale->save();
+     
+         $product_ids = $request->input('product_id');
+         $quantities = $request->input('quantity');
+         $prices = $request->input('price');
+     
+         foreach ($product_ids as $key => $product_id) {
+             $product = Product::findOrFail($product_id);
+     
+             if ($product) {
+                 $soldQuantity = $quantities[$key];
+     
+                 if ($product->stockquantity >= $soldQuantity) {
+                     // Attach the product to the sale with quantity and price
+                     $sale->products()->attach([$product_id], [
+                         'quantity' => $soldQuantity,
+                         'price' => $prices[$key]
+                     ]);
+     
+                     // Update the stock quantity of the product
+                     $product->stockquantity -= $soldQuantity;
+                     $product->save();
+                 }
+             }
+         }
+     
+         // Calculate and set the total price for the sale
+         $totalSalePrice = $sale->products->sum(function ($product) {
+             return $product->pivot->quantity * $product->pivot->price;
+         });
+         $sale->totalprice = $totalSalePrice;
+         $sale->save();
+     
+         // Generate an invoice for the sale (similar to your previous code)
+         $invoice = new Invoice();
+         $invoice->sale_id = $sale->id;
+         $invoice->invoicenumber = 'INV-' . date('Ymd') . '-' . $sale->id;
+         $invoice->totalprice = $totalSalePrice;
+         $invoice->date = $request->input('date');
+         $invoice->status = 1;
+         $invoice->createdby = $username;
+         $invoice->updatedby = "";
+         $invoice->deletedby = "";
+         $invoice->save();
+     
+         Session::flash('successcode', 'success');
+         return redirect()->route('sales.index')->with('success', 'Sales added successfully with a single invoice.');
+     }
+          
       
 
 
