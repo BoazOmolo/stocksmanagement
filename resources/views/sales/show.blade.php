@@ -61,6 +61,9 @@
                 </div>
            
             <div>
+                <!-- Add a button to download the PDF -->
+                <a href="{{ route('sales.download_pdf', ['saleId' => $sale->id]) }}" class="btn btn-primary">Download as PDF</a>
+
                 <a class="btn btn-secondary" href="{{ url()->previous() }}">Back</a>
             </div>
         </div>

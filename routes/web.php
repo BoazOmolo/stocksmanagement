@@ -57,8 +57,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/sales/{id}', [SalesController::class, 'destroy']) ->name('sales.destroy');
     // Route::put('/sales/{sale}/updatePaymentStatus', [SalesController::class, 'updatePaymentStatus'])->name('sales.updatePaymentStatus');
     Route::post('/update-payment-status/{sale}', [SalesController::class, 'updatePaymentStatus'])->name('sales.update_payment_status');
+    Route::get('/sales/{saleId}/download-pdf',  [SalesController::class, 'downloadSalesPDF'])->name('sales.download_pdf');
+
     Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/{invoice}', [InvoicesController::class, 'show'])->name('invoices.show');
+    Route::get('/invoices/{invoiceId}/download-pdf', [InvoicesController::class, 'downloadPDF'])->name('invoices.download_pdf');
+
     
 });
 

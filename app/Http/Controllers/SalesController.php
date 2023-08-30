@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Invoice;
+use PDF;
 
 class SalesController extends Controller
 {
@@ -188,6 +189,18 @@ class SalesController extends Controller
             return response()->json(['success' => false, 'error' => $e->getMessage()]);
         }
     }
+
+    public function downloadSalesPDF($saleId)
+    {
+        $sale = Sale::findOrFail($saleId);
+
+        // Generate the PDF using the view and data
+        $pdf = PDF::loadView('sales/sales_pdf', compact('sale'));
+
+        // Download the PDF with a custom name
+        return $pdf->download('sale_' . $sale->id . '.pdf');
+}
+
 
 
     

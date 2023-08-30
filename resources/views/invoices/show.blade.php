@@ -42,7 +42,8 @@
             </table>
 
             <!-- Add a print button -->
-            <button onclick="window.print()" class="btn btn-primary">Print</button>
+            {{-- <button onclick="window.print()" class="btn btn-primary">Print</button> --}}
+            <a href="{{ route('invoices.download_pdf', ['invoiceId' => $invoice->id]) }}" class="btn btn-primary">Download as PDF</a>
             
             <!-- Add a link to go back to the invoices index -->
             <a href="{{ route('invoices.index') }}" class="btn btn-secondary">Back</a>

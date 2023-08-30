@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Invoice;
+use PDF;
+
 
 class InvoicesController extends Controller
 {
@@ -90,4 +92,16 @@ class InvoicesController extends Controller
     {
         //
     }
+
+    public function downloadPDF($invoiceId)
+{
+    $invoice = Invoice::findOrFail($invoiceId);
+    
+    // Generate the PDF using the view and data
+    $pdf = PDF::loadView('invoices/invoice_pdf', compact('invoice'));
+    
+    // Download the PDF with a custom name
+    return $pdf->download('invoice_' . $invoice->invoicenumber . '.pdf');
+}
+
 }
