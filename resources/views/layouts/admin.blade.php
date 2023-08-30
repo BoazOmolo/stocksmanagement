@@ -371,6 +371,40 @@
             });
             });
         </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const markPaidButtons = document.querySelectorAll('.mark-paid-btn');
+                
+                markPaidButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const saleId = this.getAttribute('data-sale-id');
+                        updatePaymentStatus(saleId);
+                    });
+                });
+                
+                function updatePaymentStatus(saleId) {
+                    fetch(`/update-payment-status/${saleId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            location.reload(); // Refresh the page after successful update
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating payment status:', error);
+                    });
+                }
+            });
+        </script>
+
     </body>
 
 <!-- Mirrored from themesdesign.in/upcube/layouts/pages-starter.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Feb 2023 16:22:01 GMT -->

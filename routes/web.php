@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/sales', [SalesController::class, 'store'])->name('sales.store');
     Route::get('/sales/{sale}', [SalesController::class, 'show'])->name('sales.show');
     Route::delete('/sales/{id}', [SalesController::class, 'destroy']) ->name('sales.destroy');
+    // Route::put('/sales/{sale}/updatePaymentStatus', [SalesController::class, 'updatePaymentStatus'])->name('sales.updatePaymentStatus');
+    Route::post('/update-payment-status/{sale}', [SalesController::class, 'updatePaymentStatus'])->name('sales.update_payment_status');
     Route::get('/invoices', [InvoicesController::class, 'index'])->name('invoices.index');
     Route::get('/invoices/{invoice}', [InvoicesController::class, 'show'])->name('invoices.show');
     

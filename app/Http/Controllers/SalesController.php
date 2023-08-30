@@ -173,5 +173,22 @@ class SalesController extends Controller
         return redirect()->route('sales.index')->with('success', 'Sale deleted successfully.');
     }
 
+    public function updatePaymentStatus(Sale $sale)
+    {
+        try {
+            if ($sale->paymentstatus == 'Pending') {
+                $sale->paymentstatus = 'Paid';
+            } else {
+                $sale->paymentstatus = 'Pending';
+            }
+            $sale->save();
+            
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
+
+
     
 }

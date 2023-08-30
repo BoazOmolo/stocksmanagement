@@ -40,6 +40,7 @@
                                         <th>Payment Status</th>
                                         <th>Date</th>
                                         <th>Actions</th>
+                                        <th>Mark Paid</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,6 +73,13 @@
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger upcube-btn">Delete</button>
                                                 </form>
+                                            </td>
+                                            <td>
+                                                @if ($sale->paymentstatus == 'Pending')
+                                                <button class="btn btn-success upcube-btn mark-paid-btn" data-sale-id="{{ $sale->id }}">Mark Paid</button>
+                                                @else
+                                                    Paid
+                                                @endif
                                             </td>
                                         </tr> 
                                     @endforeach
