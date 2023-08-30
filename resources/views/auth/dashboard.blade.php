@@ -1,4 +1,4 @@
-{{-- @extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('content')
 <div class="main-content">
@@ -121,7 +121,7 @@
                                             <th>Payment Status</th>
                                             <th>Payment Mode</th>
                                             {{-- <th>Quantity</th> --}}
-                                            {{-- <th>Total Price</th>
+                                            <th>Total Price</th>
                                             
                                         </tr>
                                     </thead><!-- end thead -->
@@ -142,7 +142,7 @@
                                                 </td>
                                                 <td>{{ $sale->paymentmode }}</td>
                                                 {{-- <td>{{ $sale->quantity }}</td> --}}
-                                                {{-- <td>{{ $sale->invoice->totalprice ?? 'N/A' }}</td>
+                                                <td>{{ $sale->invoice->totalprice ?? 'N/A' }}</td>
                                             </tr>   
                                         @endforeach
                                     </tbody><!-- end tbody -->
@@ -205,15 +205,15 @@
                     </div><!-- end card -->
                 </div>
                 <!-- end col -->
-            </div> --}}
+            </div>
             <!-- end row -->
             <!-- end row -->
-        {{-- </div>
+        </div>
         
-    </div> --}}
+    </div>
     <!-- End Page-content -->
    
-    {{-- <footer class="footer">
+    <footer class="footer">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
@@ -226,8 +226,8 @@
                 </div>
             </div>
         </div>
-    </footer> --}}
+    </footer>
     
-{{-- </div> --}}
+</div>
     
-{{-- @endsection  --}}
+@endsection
