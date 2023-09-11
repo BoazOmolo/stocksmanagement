@@ -34,8 +34,8 @@
                                     <h4 class="mb-2">{{ isset($totalsales) ? $totalsales : '' }}</h4>
                                 </div>
                                 <div class="avatar-sm">
-                                    <span class="avatar-title bg-light text-primary rounded-3">
-                                        <i class="ri-shopping-cart-2-line font-size-24"></i>  
+                                    <span class="avatar-title bg-light text-secondary rounded-3">
+                                        <i class="mdi mdi-currency-usd font-size-24"></i>  
                                     </span>
                                 </div>
                             </div>                                            
@@ -54,8 +54,8 @@
                                     </div>
                                 </div>
                                 <div class="avatar-sm">
-                                    <span class="avatar-title bg-light text-success rounded-3">
-                                        <i class="mdi mdi-currency-usd font-size-24"></i>  
+                                    <span class="avatar-title bg-light text-warning rounded-3">
+                                        <i class="ri-alert-line font-size-24"></i> 
                                     </span>
                                 </div>
                             </div>                                              
@@ -74,8 +74,8 @@
                                     </div>
                                 </div>
                                 <div class="avatar-sm">
-                                    <span class="avatar-title bg-light text-primary rounded-3">
-                                        <i class="ri-user-3-line font-size-24"></i>  
+                                    <span class="avatar-title bg-light text-danger rounded-3">
+                                        <i class="ri-alert-fill font-size-24"></i>  
                                     </span>
                                 </div>
                                
@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="avatar-sm">
                                     <span class="avatar-title bg-light text-primary rounded-3">
-                                        <i class="ri-user-3-line font-size-24"></i>  
+                                        <i class="ri-ticket-fill font-size-24"></i>  
                                     </span>
                                 </div>
                                

@@ -215,34 +215,27 @@
 
                             <li class="menu-title">Pages</li>
 
-                           
-                            <li>
-                                <a href="{{ route('tables.index') }}" class="waves-effect">
-                                    <i class="ri-dashboard-line"></i>
-                                    <span>Tables</span>
-                                </a>
-                            </li>
                             <li>
                                 <a href="{{ route('products.index') }}" class="waves-effect">
-                                    <i class="ri-dashboard-line"></i>
+                                    <i class=" ri-price-tag-3-line"></i>
                                     <span>Products</span>
                                 </a>
                             </li> 
                             <li>
                                 <a href="{{ route('sales.index') }}" class="waves-effect">
-                                    <i class="ri-dashboard-line"></i>
+                                    <i class="ri-wallet-line"></i>
                                     <span>Sales</span>
                                 </a>
                             </li> 
                             <li>
                                 <a href="{{ route('invoices.index') }}" class="waves-effect">
-                                    <i class="ri-dashboard-line"></i>
+                                    <i class="ri-coupon-fill"></i>
                                     <span>Invoices</span>
                                 </a>
                             </li> 
                             <li>
                                 <a href="{{ route('categories.index') }}" class="waves-effect">
-                                    <i class="ri-dashboard-line"></i>
+                                    <i class="ri-list-check"></i>
                                     <span>Categories</span>
                                 </a>
                             </li> 
