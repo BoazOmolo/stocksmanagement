@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <div class="flex-grow-1">
-                                    <p class="text-truncate font-size-14 mb-2">Products Nearly Out of Stock</p>
+                                    <p class="text-truncate font-size-14 mb-2">Products Nearly<br>Out of Stock</p>
                                     <h4 class="mb-2">{{ isset($totalstock) ? $totalstock : '' }}</h4>
                                     <div>
                                         <a class="btn btn-secondary" href="{{ route('products.almostoutstock') }}">View</a>
