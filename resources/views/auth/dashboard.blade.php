@@ -126,25 +126,31 @@
                                         </tr>
                                     </thead><!-- end thead -->
                                     <tbody>
-                                        @foreach($sales as $index => $sale)
+                                        @if(isset($sales))
+                                            @foreach($sales as $index => $sale)
+                                                <tr>
+                                                    <td>{{ $index +=1}}</td>
+                                                    <td>{{ $sale->customername }}</td>
+                                                    <td>
+                                                        <div style="
+                                                            background-color: {{ $taskStatusColors[$sale->paymentstatus] }};
+                                                            padding: 5px;
+                                                            display: inline-block;
+                                                            border-radius: 10px;
+                                                        ">
+                                                            {{ $sale->paymentstatus }}
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ $sale->paymentmode }}</td>
+                                                    {{-- <td>{{ $sale->quantity }}</td> --}}
+                                                    <td>{{ $sale->invoice->totalprice ?? 'N/A' }}</td>
+                                                </tr>   
+                                            @endforeach
+                                        @else
                                             <tr>
-                                                <td>{{ $index +=1}}</td>
-                                                <td>{{ $sale->customername }}</td>
-                                                <td>
-                                                    <div style="
-                                                        background-color: {{ $taskStatusColors[$sale->paymentstatus] }};
-                                                        padding: 5px;
-                                                        display: inline-block;
-                                                        border-radius: 10px;
-                                                    ">
-                                                        {{ $sale->paymentstatus }}
-                                                    </div>
-                                                </td>
-                                                <td>{{ $sale->paymentmode }}</td>
-                                                {{-- <td>{{ $sale->quantity }}</td> --}}
-                                                <td>{{ $sale->invoice->totalprice ?? 'N/A' }}</td>
-                                            </tr>   
-                                        @endforeach
+                                                <td colspan="5">No sales data available.</td>
+                                            </tr>
+                                        @endif
                                     </tbody><!-- end tbody -->
                                 </table> <!-- end table -->
                             </div>
@@ -180,22 +186,22 @@
                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                         <div>
                                             <h5>Today</h5>
-                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ $todayTotalPrice }}</p>
-                                            <p class="text-muted text-truncate mb-0">Count: {{ $todayCount }}</p>
+                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ isset($todayTotalPrice) ?  $todayTotalPrice : '' }}</p>
+                                            <p class="text-muted text-truncate mb-0">Count: {{ isset($todayCount) ? $todayCount : ''}}</p>
                                         </div>
                                     </div><!-- end col -->
                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                         <div>
                                             <h5>Last Week</h5>
-                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ $lastWeekTotalPrice }}</p>
-                                            <p class="text-muted text-truncate mb-0">Count: {{ $lastWeekCount }}</p>
+                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ isset($lastWeekTotalPrice) ? $lastWeekTotalPrice : '' }}</p>
+                                            <p class="text-muted text-truncate mb-0">Count: {{ isset($lastWeekCount) ? $lastWeekCount : '' }}</p>
                                         </div>
                                     </div><!-- end col -->
                                     <div class="col-sm-4">
                                         <div>
                                             <h5>Last Month</h5>
-                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ $lastMonthTotalPrice }}</p>
-                                            <p class="text-muted text-truncate mb-0">Count: {{ $lastMonthCount }}</p>
+                                            <p class="text-muted text-truncate mb-0">Total Price: Ksh. {{ isset($lastMonthTotalPrice) ? $lastMonthTotalPrice : '' }}</p>
+                                            <p class="text-muted text-truncate mb-0">Count: {{ isset($lastMonthCount) ? $lastMonthCount : '' }}</p>
                                         </div>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
