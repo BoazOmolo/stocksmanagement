@@ -56,6 +56,35 @@ class SalesController extends Controller
      {
          $username = Auth::user()->name;
      
+         $product_ids = $request->input('product_id');
+         $quantities = $request->input('quantity');
+         $prices = $request->input('price');
+         $isValid = true;
+     
+         // Validate quantity against stock quantity for each product
+         foreach ($product_ids as $key => $product_id) {
+             $product = Product::findOrFail($product_id);
+     
+             if ($product) {
+                 $soldQuantity = $quantities[$key];
+     
+                 if ($product->stockquantity < $soldQuantity) {
+                     // If quantity is higher than stock quantity, set isValid to false
+                     $isValid = false;
+                     $errorProduct = $product->name;
+                     break; // Exit the loop on the first invalid product
+                 }
+             }
+         }
+     
+         if (!$isValid) {
+             // If any product has invalid quantity, display an error message
+             return redirect()
+                 ->route('sales.create')
+                 ->with('error', "Quantity for product '$errorProduct' is higher than available stock.");
+         }
+     
+         // If all quantities are valid, proceed to create the sale
          $sale = new Sale();
          $sale->customername = $request->input('customername');
          $sale->paymentmode = $request->input('paymentmode');
@@ -67,27 +96,21 @@ class SalesController extends Controller
          $sale->deletedby = "";
          $sale->save();
      
-         $product_ids = $request->input('product_id');
-         $quantities = $request->input('quantity');
-         $prices = $request->input('price');
-     
          foreach ($product_ids as $key => $product_id) {
              $product = Product::findOrFail($product_id);
      
              if ($product) {
                  $soldQuantity = $quantities[$key];
      
-                 if ($product->stockquantity >= $soldQuantity) {
-                     // Attach the product to the sale with quantity and price
-                     $sale->products()->attach([$product_id], [
-                         'quantity' => $soldQuantity,
-                         'price' => $prices[$key]
-                     ]);
+                 // Attach the product to the sale with quantity and price
+                 $sale->products()->attach([$product_id], [
+                     'quantity' => $soldQuantity,
+                     'price' => $prices[$key]
+                 ]);
      
-                     // Update the stock quantity of the product
-                     $product->stockquantity -= $soldQuantity;
-                     $product->save();
-                 }
+                 // Update the stock quantity of the product
+                 $product->stockquantity -= $soldQuantity;
+                 $product->save();
              }
          }
      
@@ -113,6 +136,7 @@ class SalesController extends Controller
          Session::flash('successcode', 'success');
          return redirect()->route('sales.index')->with('success', 'Sales added successfully with a single invoice.');
      }
+     
           
       
 
